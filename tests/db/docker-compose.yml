@@ -1,0 +1,20 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: tsuki
+      POSTGRES_PASSWORD: pass1234
+      POSTGRES_DB: db_test
+    volumes:
+      - postgres:/var/lib/postgresql
+volumes:
+    postgres:
+        driver: local
+        driver_opts:
+            o: "bind"
+            type: "none"
+            device: "/Users/aaitoual/Desktop/postgres/data"
