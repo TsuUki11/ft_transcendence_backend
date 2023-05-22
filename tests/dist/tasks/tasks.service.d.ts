@@ -5,5 +5,5 @@ export declare class TasksService {
     constructor(prisma: PrismaService);
     getAllTasks(): Promise<import(".prisma/client").Task[]>;
     createTask(task_info: Prisma.TaskCreateInput): Prisma.Prisma__TaskClient<import(".prisma/client").Task, never>;
-    addTaskForUser(uId: Prisma.UserWhereUniqueInput, tId: Prisma.TaskWhereUniqueInput): Promise<void>;
+    addTaskForUser(uId: number, tId: number): Promise<void>;
 }

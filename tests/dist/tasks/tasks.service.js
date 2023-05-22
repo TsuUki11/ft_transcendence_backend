@@ -24,9 +24,9 @@ let TasksService = class TasksService {
         return newTask;
     }
     async addTaskForUser(uId, tId) {
-        this.prisma.user.update({
-            where: uId,
-            data: tId
+        await this.prisma.user.update({
+            where: { id: uId },
+            data: { task: { connect: { id: tId } } }
         });
     }
 };

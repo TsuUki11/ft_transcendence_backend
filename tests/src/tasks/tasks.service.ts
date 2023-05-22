@@ -70,12 +70,12 @@ export class TasksService {
 	// 	return await this.taskRepository.update( { id }, { status: updateTask });
 	// }
 
-	async addTaskForUser(uId: Prisma.UserWhereUniqueInput, tId: Prisma.TaskWhereUniqueInput) {
+	async addTaskForUser(uId: number, tId: number) {
 		// const user = await this.prisma.user.findUnique({ where: uId });
 		// const task = await this.prisma.task.findUnique({ where: tId });
-		this.prisma.user.update({
-			where: uId,
-			data: tId
+		await this.prisma.user.update({
+			where: {id: uId},
+			data: { task: { connect: { id: tId } } }
 		})
 	}
 }

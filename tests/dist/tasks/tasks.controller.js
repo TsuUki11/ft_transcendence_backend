@@ -28,6 +28,7 @@ let TasksController = class TasksController {
         return this.tasksServices.getAllTasks();
     }
     addTaskToUser(uId, tId) {
+        console.log(uId, tId);
         return this.tasksServices.addTaskForUser(uId, tId);
     }
 };
@@ -47,10 +48,10 @@ __decorate([
 ], TasksController.prototype, "getTasks", null);
 __decorate([
     (0, common_1.Patch)('/addTaskToUser'),
-    __param(0, (0, common_1.Body)('uId')),
-    __param(1, (0, common_1.Body)('tId')),
+    __param(0, (0, common_1.Body)('uId', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Body)('tId', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Number, Number]),
     __metadata("design:returntype", void 0)
 ], TasksController.prototype, "addTaskToUser", null);
 TasksController = __decorate([

@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { runInThisContext } from 'vm';
-import { title } from 'process';
+import { constrainedMemory, title } from 'process';
 import { CreateTaskDto } from './dto/create-task-dto';
 import { TasksStatusValidationPipe } from './pipes/tasks-status-validation-pipe';
 import { GetTasksFilterDto } from './dto/get-tasks-filter-dto';
@@ -47,7 +47,8 @@ export class TasksController {
     // }
 
     @Patch('/addTaskToUser')
-    addTaskToUser(@Body('uId') uId: Prisma.UserWhereUniqueInput, @Body('tId') tId: Prisma.TaskWhereUniqueInput) {
+    addTaskToUser(@Body('uId', ParseIntPipe) uId: number, @Body('tId', ParseIntPipe) tId: number) {
+        console.log(uId, tId);
         return this.tasksServices.addTaskForUser(uId, tId);
     }
     
