@@ -19,17 +19,26 @@ let UsersService = class UsersService {
     async createUser(data) {
         console.log("CREATE CALLED");
         const newUser = await this.prisma.user.create({ data });
-        console.log(newUser);
+        return newUser;
     }
     async getAllUsers() {
-        const users = await this.prisma.user.findMany();
+        const users = await this.prisma.user.findMany({ include: { task: true } });
         return users;
     }
     async getUser(where) {
-        return await this.prisma.user.findUnique({ where });
+        const user = await this.prisma.user.findUniqueOrThrow({ where });
+        return user;
     }
     async updateUser(id, updateInfo) {
-        const user = await this.prisma.user.update({ where: { id }, data: updateInfo });
+        const user = await this.prisma.user.update({
+            where: id,
+            data: updateInfo,
+            include: { task: true }
+        });
+        return user;
+    }
+    async deleteUser(where) {
+        const user = await this.prisma.user.delete({ where });
         return user;
     }
 };

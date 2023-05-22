@@ -3,17 +3,16 @@ import { CreateTaskDto } from './dto/create-task-dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter-dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { promises } from 'dns';
-import { Task } from './typeorm/entities/task.entity';
 import { Repository } from 'typeorm';
 import { TaskStatus } from './task-status.enum';
 import { updateTaskDto } from './dto/update-task-dto';
-import { User } from '../users/typeorm/entities/user.entity';
 import { retry } from 'rxjs';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.servise';
 
 @Injectable()
 export class TasksService {
-	constructor (@InjectRepository(Task)private taskRepository: Repository<Task>,
-				@InjectRepository(User)private userRepository: Repository<User>) {}
+	constructor (private prisma: PrismaService) {}
 	
 	// private Tasks: Task[] = [];
 	// async getTaskById(id: number): Promise<Task>{
@@ -23,13 +22,13 @@ export class TasksService {
 	// 	return task_found;
 	// }
 	
-	async getAllTasks(): Promise<Task[]> {
-		return await this.taskRepository.find();
+	async getAllTasks() {
+		return await this.prisma.task.findMany();
 	}
 
-	createTask(task_info: CreateTaskDto): Promise<Task > {
-		const newTask = this.taskRepository.create({ ...task_info});
-		return this.taskRepository.save(newTask);
+	createTask(task_info: Prisma.TaskCreateInput) {
+		const newTask = this.prisma.task.create({ data: task_info });
+		return newTask;
 	}
 	// getTaskById(id: string) : Task {
 	//     const task_found = this.Tasks.find(tasks => tasks.id == id);
@@ -62,24 +61,21 @@ export class TasksService {
 	// }
 
 
-	async deleteTaskById(id: number) : Promise<Task[]> {
-		await this.taskRepository.delete({ id });
-	    return this.getAllTasks();
-	}
+	// async deleteTaskById(id: number) : Promise<Task[]> {
+	// 	await this.taskRepository.delete({ id });
+	//     return this.getAllTasks();
+	// }
 
-	async updateStatus(id: number,  updateTask: TaskStatus) {
-		return await this.taskRepository.update( { id }, { status: updateTask });
-	}
+	// async updateStatus(id: number,  updateTask: TaskStatus) {
+	// 	return await this.taskRepository.update( { id }, { status: updateTask });
+	// }
 
-	async addTaskForUser(uId: number, tId: number): Promise<User> {
-		const user = await this.userRepository.findOneBy({ id: uId });
-		if (!user)
-			throw new NotFoundException(`No user found by the id: ${uId} !!`);
-		const task = await this.taskRepository.findOneBy({ id: tId });
-		if (!task)
-			throw new NotFoundException(`No task found by the id: ${tId} !!`);
-		user.task = task;
-		this.userRepository.save(user);
-		return user;
+	async addTaskForUser(uId: Prisma.UserWhereUniqueInput, tId: Prisma.TaskWhereUniqueInput) {
+		// const user = await this.prisma.user.findUnique({ where: uId });
+		// const task = await this.prisma.task.findUnique({ where: tId });
+		this.prisma.user.update({
+			where: uId,
+			data: tId
+		})
 	}
 }

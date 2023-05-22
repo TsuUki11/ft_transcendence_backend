@@ -1,15 +1,9 @@
-import { CreateTaskDto } from './dto/create-task-dto';
-import { Task } from './typeorm/entities/task.entity';
-import { Repository } from 'typeorm';
-import { TaskStatus } from './task-status.enum';
-import { User } from '../users/typeorm/entities/user.entity';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.servise';
 export declare class TasksService {
-    private taskRepository;
-    private userRepository;
-    constructor(taskRepository: Repository<Task>, userRepository: Repository<User>);
-    getAllTasks(): Promise<Task[]>;
-    createTask(task_info: CreateTaskDto): Promise<Task>;
-    deleteTaskById(id: number): Promise<Task[]>;
-    updateStatus(id: number, updateTask: TaskStatus): Promise<import("typeorm").UpdateResult>;
-    addTaskForUser(uId: number, tId: number): Promise<User>;
+    private prisma;
+    constructor(prisma: PrismaService);
+    getAllTasks(): Promise<import(".prisma/client").Task[]>;
+    createTask(task_info: Prisma.TaskCreateInput): Prisma.Prisma__TaskClient<import(".prisma/client").Task, never>;
+    addTaskForUser(uId: Prisma.UserWhereUniqueInput, tId: Prisma.TaskWhereUniqueInput): Promise<void>;
 }

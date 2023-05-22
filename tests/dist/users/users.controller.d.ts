@@ -6,5 +6,6 @@ export declare class UsersController {
     createUser(user_Info: Prisma.UserCreateInput): void;
     getAllUsers(): Promise<import(".prisma/client").User[]>;
     getUser(id: Prisma.UserWhereUniqueInput): Promise<import(".prisma/client").User>;
-    updateUser(id: number, updateInfo: Prisma.UserUpdateInput): Promise<import(".prisma/client").User>;
+    updateUser(id: Prisma.UserWhereUniqueInput, updateInfo: Prisma.UserUpdateInput): Promise<import(".prisma/client").User>;
+    deleteUser(id: Prisma.UserWhereUniqueInput): void;
 }

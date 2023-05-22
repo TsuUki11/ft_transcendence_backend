@@ -5,10 +5,9 @@ import { title } from 'process';
 import { CreateTaskDto } from './dto/create-task-dto';
 import { TasksStatusValidationPipe } from './pipes/tasks-status-validation-pipe';
 import { GetTasksFilterDto } from './dto/get-tasks-filter-dto';
-import { Task } from './typeorm/entities/task.entity';
 import { TaskStatus } from './task-status.enum';
 import { updateTaskDto } from './dto/update-task-dto';
-import { User } from '../users/typeorm/entities/user.entity';
+import { Prisma } from '@prisma/client';
 
 @Controller('tasks')
 export class TasksController {
@@ -19,20 +18,20 @@ export class TasksController {
     //     return this.tasksServices.getTaskById(id);
     // }
     @Post()
-    createTask (@Body() createTaskDto: CreateTaskDto): Promise <Task> {
-        return this.tasksServices.createTask(createTaskDto);
+    createTask (@Body() info: Prisma.TaskCreateInput) {
+        return this.tasksServices.createTask(info);
     }
     @Get()
-    getTasks (@Query()filterDto: GetTasksFilterDto): Promise<Task[]> {
+    getTasks (@Query()filterDto: GetTasksFilterDto) {
         // if (Object.keys(filterDto).length)
         //     return this.tasksServices.getTasksWithFilter(filterDto);
         // else
             return this.tasksServices.getAllTasks();
     }
-    @Patch('/:id/status')
-    updateStatus(@Param('id', ParseIntPipe) id: number, @Body('status', TasksStatusValidationPipe) status: TaskStatus) {
-        return this.tasksServices.updateStatus(id, status);
-    }
+    // @Patch('/:id/status')
+    // updateStatus(@Param('id', ParseIntPipe) id: number, @Body('status', TasksStatusValidationPipe) status: TaskStatus) {
+    //     return this.tasksServices.updateStatus(id, status);
+    // }
     // @Get()
     // getTasks (@Query()filterDto: GetTasksFilterDto): Task[] {
     //     if (Object.keys(filterDto).length)
@@ -48,14 +47,14 @@ export class TasksController {
     // }
 
     @Patch('/addTaskToUser')
-    addTaskToUser(@Body('uId', ParseIntPipe) uId: number, @Body('tId', ParseIntPipe) tId: number) {
+    addTaskToUser(@Body('uId') uId: Prisma.UserWhereUniqueInput, @Body('tId') tId: Prisma.TaskWhereUniqueInput) {
         return this.tasksServices.addTaskForUser(uId, tId);
     }
     
 
-    @Delete('/:id')
-    deleteTaskById (@Param('id', ParseIntPipe) id: number) : Promise<Task[]> {
-        return this.tasksServices.deleteTaskById(id);
-    }
+    // @Delete('/:id')
+    // deleteTaskById (@Param('id', ParseIntPipe) id: number) {
+    //     return this.tasksServices.deleteTaskById(id);
+    // }
 
 }
