@@ -1,8 +1,0 @@
--- DropForeignKey
-ALTER TABLE "User" DROP CONSTRAINT "User_tId_fkey";
-
--- AlterTable
-ALTER TABLE "User" ALTER COLUMN "tId" DROP NOT NULL;
-
--- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_tId_fkey" FOREIGN KEY ("tId") REFERENCES "Task"("id") ON DELETE SET NULL ON UPDATE CASCADE;

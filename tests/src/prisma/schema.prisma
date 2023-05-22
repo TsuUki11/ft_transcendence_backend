@@ -15,7 +15,8 @@ model Task {
   title       String
   description String
   done        Boolean @default(false)
-	user				User?
+  user User	@relation(fields: [uId], references: [id])
+  uId	Int	@unique
 }
 
 model User {
@@ -24,7 +25,5 @@ model User {
   last_name  String
   username   String
   password   String
-
-  tId	Int?	@unique
-  task Task?	@relation(fields: [tId], references: [id])
+  task      Task[]
 }

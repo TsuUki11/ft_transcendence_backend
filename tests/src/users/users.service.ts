@@ -4,6 +4,8 @@ import { Repository, getConnection, getRepository } from 'typeorm';
 import { createUserDto } from './dto/create-user-dto';
 import { PrismaService } from '../prisma/prisma.servise';
 import { Prisma, Task, User } from '@prisma/client';
+import { connect } from 'http2';
+import { title } from 'process';
 
 @Injectable()
 export class UsersService {
@@ -37,6 +39,32 @@ export class UsersService {
 		return user;
 	}
 
+	async createTaskForUser(uId__: number, taskInfo: Prisma.TaskCreateInput) {
+		console.log(taskInfo);
+		// const user = await this.prisma.user.findUnique({ where: {id: uId__} });
+		await this.prisma.user.update( {
+			where: { id: uId__},
+			data: {
+				task: {create: {
+					description: taskInfo.description,
+					title: taskInfo.title,
+				}}
+			}
+		})
+		const user = this.prisma.user.findUnique( {
+			where: {id: uId__},
+			include: {task: true}
+		})
+		// const task = await this.prisma.task.update({
+		// 	where: {id: created_task.id},
+		// 	data: {user: {connect: { id: uId__ }}}
+		// })
+		return user;
+		// const user = await this.prisma.user.update({
+		// 	where: {id: uId},
+		// 	data: {task: connect{ uId: uId}},
+		// })
+	}
 	async deleteUser(where: Prisma.UserWhereUniqueInput) {
 		const user = await this.prisma.user.delete({ where })
 	}
