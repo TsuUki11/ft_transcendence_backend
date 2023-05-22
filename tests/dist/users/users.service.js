@@ -39,7 +39,6 @@ let UsersService = class UsersService {
     }
     async deleteUser(where) {
         const user = await this.prisma.user.delete({ where });
-        return user;
     }
 };
 UsersService = __decorate([

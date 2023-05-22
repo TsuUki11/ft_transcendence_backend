@@ -7,5 +7,5 @@ export declare class UsersService {
     getAllUsers(): Promise<User[]>;
     getUser(where: Prisma.UserWhereUniqueInput): Promise<User>;
     updateUser(id: Prisma.UserWhereUniqueInput, updateInfo: Prisma.UserUpdateInput): Promise<User>;
-    deleteUser(where: Prisma.UserWhereUniqueInput): Promise<User>;
+    deleteUser(where: Prisma.UserWhereUniqueInput): Promise<void>;
 }

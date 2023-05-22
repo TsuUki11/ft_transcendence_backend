@@ -23,12 +23,12 @@ export class UsersController {
     }
 
     @Patch("/:id")
-    updateUser(@Param('id') id: Prisma.UserWhereUniqueInput, @Body() updateInfo: Prisma.UserUpdateInput) {
-        return this.usersService.updateUser(id, updateInfo);
+    updateUser(@Param('id', ParseIntPipe) id: number, @Body() updateInfo: Prisma.UserUpdateInput) {
+        return this.usersService.updateUser({ id }, updateInfo);
     }
 
     @Delete("/:id")
-    deleteUser(@Param('id') id: Prisma.UserWhereUniqueInput) {
-        this.usersService.deleteUser(id);
+    deleteUser(@Param('id', ParseIntPipe) id: number) {
+        this.usersService.deleteUser({ id });
     }
 }
