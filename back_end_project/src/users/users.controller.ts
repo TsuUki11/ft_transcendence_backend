@@ -12,4 +12,19 @@ export class UsersController {
     cerateUser(@Body() info: createUserDto): Promise<User> {
         return this.usersService.createUser(info)
     }
+
+    @Get()
+    getAllUsers(): Promise<User[]> {
+        return this.usersService.getAllUsers();
+    }
+
+    @Delete()
+    deleteAllUsers() {
+        this.usersService.deleteAllUsers();
+    }
+
+    @Post("/:id")
+    followTheUser(@Param("id", ParseIntPipe) id: number, @Body("follow_id", ParseIntPipe) followedId: number) {
+        this.usersService.followTheUser(id, followedId);
+    }
 }

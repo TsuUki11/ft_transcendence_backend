@@ -23,6 +23,15 @@ let UsersController = class UsersController {
     cerateUser(info) {
         return this.usersService.createUser(info);
     }
+    getAllUsers() {
+        return this.usersService.getAllUsers();
+    }
+    deleteAllUsers() {
+        this.usersService.deleteAllUsers();
+    }
+    followTheUser(id, followedId) {
+        this.usersService.followTheUser(id, followedId);
+    }
 };
 __decorate([
     (0, common_1.Post)(),
@@ -31,6 +40,26 @@ __decorate([
     __metadata("design:paramtypes", [create_user_dto_1.createUserDto]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "cerateUser", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "getAllUsers", null);
+__decorate([
+    (0, common_1.Delete)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "deleteAllUsers", null);
+__decorate([
+    (0, common_1.Post)("/:id"),
+    __param(0, (0, common_1.Param)("id", common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Body)("follow_id", common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "followTheUser", null);
 UsersController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

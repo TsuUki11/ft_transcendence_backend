@@ -20,6 +20,25 @@ let UsersService = class UsersService {
         const newUser = await this.prisma.user.create({ data: info });
         return newUser;
     }
+    async getAllUsers() {
+        const users = await this.prisma.user.findMany({});
+        return users;
+    }
+    async deleteAllUsers() {
+        const users = await this.prisma.user.deleteMany();
+    }
+    async followTheUser(id, followedId) {
+        const user = await this.prisma.user.update({ where: { id },
+            data: { following: { connect: { id: followedId } } } });
+        const followed = await this.prisma.user.update({
+            where: { id: followedId },
+            data: {
+                followedBy: {
+                    connect: { id }
+                }
+            }
+        });
+    }
 };
 UsersService = __decorate([
     (0, common_1.Injectable)(),

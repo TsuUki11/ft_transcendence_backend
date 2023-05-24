@@ -5,4 +5,7 @@ export declare class UsersController {
     private usersService;
     constructor(usersService: UsersService);
     cerateUser(info: createUserDto): Promise<User>;
+    getAllUsers(): Promise<User[]>;
+    deleteAllUsers(): void;
+    followTheUser(id: number, followedId: number): void;
 }

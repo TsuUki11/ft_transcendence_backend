@@ -14,7 +14,29 @@ export class UsersService {
 	constructor(private prisma: PrismaService) {}
 
 	async createUser(info: createUserDto): Promise<User> {
-		const newUser = await this.prisma.user.create( { data: info} );
+		const newUser = await this.prisma.user.create( { data: info}, );
 		return newUser;
+	}
+
+	async getAllUsers(): Promise<User[]> {
+		const users = await this.prisma.user.findMany({});
+		return users;
+	}
+
+	async deleteAllUsers() {
+		const users = await this.prisma.user.deleteMany();
+	}
+
+	async followTheUser(id: number, followedId: number) {
+		const user = await this.prisma.user.update({ where: {id} ,
+			data: { following: {connect: {id: followedId} }}})
+		const followed = await this.prisma.user.update({
+			where: {id: followedId},
+			data: {
+				followedBy: {
+					connect: {id}
+				}
+			}
+		});
 	}
 }
