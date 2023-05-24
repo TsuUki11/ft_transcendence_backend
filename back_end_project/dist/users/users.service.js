@@ -16,46 +16,9 @@ let UsersService = class UsersService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async createUser(data) {
-        console.log("CREATE CALLED");
-        const newUser = await this.prisma.user.create({ data });
+    async createUser(info) {
+        const newUser = await this.prisma.user.create({ data: info });
         return newUser;
-    }
-    async getAllUsers() {
-        const users = await this.prisma.user.findMany({ include: { task: true } });
-        return users;
-    }
-    async getUser(where) {
-        const user = await this.prisma.user.findUniqueOrThrow({ where });
-        return user;
-    }
-    async updateUser(id, updateInfo) {
-        const user = await this.prisma.user.update({
-            where: id,
-            data: updateInfo,
-            include: { task: true }
-        });
-        return user;
-    }
-    async createTaskForUser(uId__, taskInfo) {
-        console.log(taskInfo);
-        await this.prisma.user.update({
-            where: { id: uId__ },
-            data: {
-                task: { create: {
-                        description: taskInfo.description,
-                        title: taskInfo.title,
-                    } }
-            }
-        });
-        const user = this.prisma.user.findUnique({
-            where: { id: uId__ },
-            include: { task: true }
-        });
-        return user;
-    }
-    async deleteUser(where) {
-        const user = await this.prisma.user.delete({ where });
     }
 };
 UsersService = __decorate([

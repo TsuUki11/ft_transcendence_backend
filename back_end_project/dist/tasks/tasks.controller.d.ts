@@ -4,7 +4,7 @@ import { Prisma } from '@prisma/client';
 export declare class TasksController {
     private tasksServices;
     constructor(tasksServices: TasksService);
-    createTask(info: Prisma.TaskCreateInput): Prisma.Prisma__TaskClient<import(".prisma/client").Task, never>;
-    getTasks(filterDto: GetTasksFilterDto): Promise<import(".prisma/client").Task[]>;
+    createTask(info: Prisma.TaskCreateInput): any;
+    getTasks(filterDto: GetTasksFilterDto): Promise<any>;
     addTaskToUser(uId: number, tId: number): Promise<void>;
 }

@@ -11,4 +11,9 @@ generator client {
 }
 
 model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  email String @unique
+  profile_picture String?
+  createdAt DateTime @default(now())
 }

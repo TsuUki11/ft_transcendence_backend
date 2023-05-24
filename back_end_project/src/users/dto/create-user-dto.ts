@@ -1,15 +1,13 @@
-import { IsNotEmpty } from "class-validator";
-
+import { Prisma, User } from '@prisma/client';
+import { IsNotEmpty, IsOptional } from "class-validator";
 export class createUserDto {
     @IsNotEmpty()
-    first_name: string;
+    username:   string
 
     @IsNotEmpty()
-    last_name: string;
+    email:  string
 
+    @IsOptional()
     @IsNotEmpty()
-    username: string;
-    
-    @IsNotEmpty()
-    password: string;
+    profile_picture:    string
 }
