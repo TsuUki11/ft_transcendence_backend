@@ -1,26 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMessageDto } from './dto/create-message.dto';
-import { UpdateMessageDto } from './dto/update-message.dto';
 import { Message } from './entities/message.entity';
 import { WebSocketServer } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { Client } from 'socket.io/dist/client';
 
 @Injectable()
 export class MessagesService {
-	@WebSocketServer()
-	server: Server
 	messages: Message[] = [{name: 'tsuki', text: 'Hello, from tsuki'}];
 	idToUser = {};
 
-	async create(createMessageDto: CreateMessageDto) {
-		const message = createMessageDto;
+	async create(createMessageDto: CreateMessageDto, client: Socket) {
+		const message = {
+			name: this.idName(client.id),
+			text: createMessageDto.text,
+		};
 		this.messages.push(message);
-		this.server.emit('message', message);
 		return message;
 	}
 
 	findAll() {
-		return `This action returns all messages`;
+		return this.messages;
 	}
 
 	// findOne(id: number) {
@@ -41,8 +41,7 @@ export class MessagesService {
 	}
 
 	async isTyping(isTyping__: boolean, client: Socket) {
-		const name = await this.idName(client.id);
-		client.broadcast.emit("typing", {name, isTyping__});
+
 	}
 
 	remove(id: number) {

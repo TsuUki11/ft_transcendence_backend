@@ -7,10 +7,9 @@ import { MessagesModule } from './chat_sevrer/messages.module';
 console.log()
 @Module({
   imports: [
-    TasksModule,
-    UsersModule,
+    // TasksModule,
+    // UsersModule,
     MessagesModule,
-
   ],
   controllers: [],
   providers:[]
