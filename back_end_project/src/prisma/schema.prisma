@@ -10,20 +10,5 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Task {
-  id          Int     @id() @unique() @default(autoincrement())
-  title       String
-  description String
-  done        Boolean @default(false)
-  user User	@relation(fields: [uId], references: [id])
-  uId	Int	@unique
-}
-
 model User {
-  id         Int    @id() @default(autoincrement())
-  first_name String
-  last_name  String
-  username   String
-  password   String
-  task      Task[]
 }
