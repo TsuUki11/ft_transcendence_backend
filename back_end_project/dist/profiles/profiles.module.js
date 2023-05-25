@@ -6,21 +6,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GlobalExceptionFilter = void 0;
+exports.ProfilesModule = void 0;
 const common_1 = require("@nestjs/common");
-let GlobalExceptionFilter = class GlobalExceptionFilter {
-    catch(exception, host) {
-        const response = host.switchToHttp().getResponse();
-        if (exception.code === 'P2002') {
-            response.status(409).json({
-                error: `The ${exception.meta.target[0]} is already taken`,
-                target: exception.meta.target[0]
-            });
-        }
-    }
+const profiles_service_1 = require("./profiles.service");
+const profiles_controller_1 = require("./profiles.controller");
+const prisma_servise_1 = require("../prisma/prisma.servise");
+let ProfilesModule = class ProfilesModule {
 };
-GlobalExceptionFilter = __decorate([
-    (0, common_1.Catch)()
-], GlobalExceptionFilter);
-exports.GlobalExceptionFilter = GlobalExceptionFilter;
-//# sourceMappingURL=exceptions_handler.js.map
+ProfilesModule = __decorate([
+    (0, common_1.Module)({
+        controllers: [profiles_controller_1.ProfilesController],
+        providers: [prisma_servise_1.PrismaService, profiles_service_1.ProfilesService]
+    })
+], ProfilesModule);
+exports.ProfilesModule = ProfilesModule;
+//# sourceMappingURL=profiles.module.js.map

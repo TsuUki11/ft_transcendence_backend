@@ -4,10 +4,7 @@ import { Socket } from 'socket.io';
 export declare class MessagesService {
     messages: Message[];
     idToUser: {};
-    create(createMessageDto: CreateMessageDto, client: Socket): Promise<{
-        name: string;
-        text: string;
-    }>;
+    create(createMessageDto: CreateMessageDto, client: Socket): Promise<void>;
     findAll(): Message[];
     idName(id: string): string;
     joinRoom(name: string, client: Socket): Promise<unknown[]>;

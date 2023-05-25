@@ -6,24 +6,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.GlobalExceptionFilter = void 0;
 const common_1 = require("@nestjs/common");
-const users_module_1 = require("./users/users.module");
-const profiles_module_1 = require("./profiles/profiles.module");
-const exceptions_handler_1 = require("./exceptions_handler");
-const core_1 = require("@nestjs/core");
-console.log();
-let AppModule = class AppModule {
+let GlobalExceptionFilter = class GlobalExceptionFilter {
+    catch(exception, host) {
+        const response = host.switchToHttp().getResponse();
+        if (exception.code === 'P2002') {
+            response.status(409).json({
+                error: `The ${exception.meta.target[0]} is already taken`,
+                target: exception.meta.target[0]
+            });
+        }
+        console.error('Global Exception:', exception);
+    }
 };
-AppModule = __decorate([
-    (0, common_1.Module)({
-        imports: [
-            users_module_1.UsersModule,
-            profiles_module_1.ProfilesModule,
-        ],
-        controllers: [],
-        providers: [{ provide: core_1.APP_FILTER, useClass: exceptions_handler_1.GlobalExceptionFilter, }]
-    })
-], AppModule);
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+GlobalExceptionFilter = __decorate([
+    (0, common_1.Catch)()
+], GlobalExceptionFilter);
+exports.GlobalExceptionFilter = GlobalExceptionFilter;
+//# sourceMappingURL=exceptions_handler.js.map

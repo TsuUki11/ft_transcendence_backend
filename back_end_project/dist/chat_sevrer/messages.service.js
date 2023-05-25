@@ -14,12 +14,6 @@ let MessagesService = class MessagesService {
         this.idToUser = {};
     }
     async create(createMessageDto, client) {
-        const message = {
-            name: this.idName(client.id),
-            text: createMessageDto.text,
-        };
-        this.messages.push(message);
-        return message;
     }
     findAll() {
         return this.messages;

@@ -9,40 +9,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsersService = void 0;
+exports.ProfilesService = void 0;
 const common_1 = require("@nestjs/common");
+const fs = require("fs");
 const prisma_servise_1 = require("../prisma/prisma.servise");
-let UsersService = class UsersService {
+__dirname;
+const DEFAULT_PROFILE_PICTURE_PATH = "/../../resources/default_pp.png";
+let ProfilesService = class ProfilesService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async createUser(info) {
-        const newUser = await this.prisma.user.create({ data: info });
-        return newUser;
-    }
-    async getAllUsers() {
-        const users = await this.prisma.user.findMany({ include: { profile: true, followedBy: true, following: true } });
-        return users;
-    }
-    async deleteAllUsers() {
-        const users = await this.prisma.user.deleteMany();
-    }
-    async followTheUser(id, followedId) {
-        const user = await this.prisma.user.update({ where: { id },
-            data: { following: { connect: { id: followedId } } } });
-        const followed = await this.prisma.user.update({
-            where: { id: followedId },
-            data: {
-                followedBy: {
-                    connect: { id }
+    async getDefaultProfilePicture() {
+        return new Promise((resolve, reject) => {
+            fs.readFile(__dirname + DEFAULT_PROFILE_PICTURE_PATH, 'utf8', (error, data) => {
+                if (error) {
+                    reject(error);
                 }
-            }
+                else {
+                    resolve(data);
+                }
+            });
+        });
+    }
+    async createProfileForUser(id) {
+        const defaultPP = fs.readFileSync(__dirname + DEFAULT_PROFILE_PICTURE_PATH, { encoding: 'base64' });
+        const user = await this.prisma.user.update({
+            where: { id },
+            data: { profile: { create: { profile_picture: defaultPP } } }
         });
     }
 };
-UsersService = __decorate([
+ProfilesService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_servise_1.PrismaService])
-], UsersService);
-exports.UsersService = UsersService;
-//# sourceMappingURL=users.service.js.map
+], ProfilesService);
+exports.ProfilesService = ProfilesService;
+//# sourceMappingURL=profiles.service.js.map

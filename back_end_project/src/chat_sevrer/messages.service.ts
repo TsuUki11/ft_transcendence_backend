@@ -11,12 +11,12 @@ export class MessagesService {
 	idToUser = {};
 
 	async create(createMessageDto: CreateMessageDto, client: Socket) {
-		const message = {
-			name: this.idName(client.id),
-			text: createMessageDto.text,
-		};
-		this.messages.push(message);
-		return message;
+		// const message = {
+		// 	name: this.idName(client.id),
+		// 	text: createMessageDto.text,
+		// };
+		// this.messages.push(message);
+		// return message;
 	}
 
 	findAll() {

@@ -21,10 +21,5 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], createUserDto.prototype, "email", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], createUserDto.prototype, "profile_picture", void 0);
 exports.createUserDto = createUserDto;
 //# sourceMappingURL=create-user-dto.js.map

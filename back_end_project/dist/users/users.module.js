@@ -11,14 +11,12 @@ const common_1 = require("@nestjs/common");
 const users_controller_1 = require("./users.controller");
 const users_service_1 = require("./users.service");
 const prisma_servise_1 = require("../prisma/prisma.servise");
-const core_1 = require("@nestjs/core");
-const exceptions_handler_1 = require("./exceptions_handler");
 let UsersModule = class UsersModule {
 };
 UsersModule = __decorate([
     (0, common_1.Module)({
         controllers: [users_controller_1.UsersController],
-        providers: [prisma_servise_1.PrismaService, users_service_1.UsersService, { provide: core_1.APP_FILTER, useClass: exceptions_handler_1.GlobalExceptionFilter, }],
+        providers: [prisma_servise_1.PrismaService, users_service_1.UsersService],
     })
 ], UsersModule);
 exports.UsersModule = UsersModule;

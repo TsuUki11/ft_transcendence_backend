@@ -11,7 +11,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
             target: exception.meta.target[0]
         });
     }
-    // console.error('Global Exception:', exception);
+    console.error('Global Exception:', exception);
     
     // You can customize the error response as per your requirements
     // const response = host.switchToHttp().getResponse();

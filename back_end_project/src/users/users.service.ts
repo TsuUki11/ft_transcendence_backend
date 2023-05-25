@@ -14,12 +14,12 @@ export class UsersService {
 	constructor(private prisma: PrismaService) {}
 
 	async createUser(info: createUserDto): Promise<User> {
-		const newUser = await this.prisma.user.create( { data: info}, );
+		const newUser = await this.prisma.user.create( { data: info } );
 		return newUser;
 	}
 
 	async getAllUsers(): Promise<User[]> {
-		const users = await this.prisma.user.findMany({});
+		const users = await this.prisma.user.findMany({ include: {profile: true, followedBy: true, following: true} });
 		return users;
 	}
 
