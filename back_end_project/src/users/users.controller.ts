@@ -22,14 +22,6 @@ export class UsersController {
     return this.usersService.createUser(user_Info);
   }
 
-  @Post("/createRoom/:id")
-  createRoom(
-    @Param('id', ParseIntPipe) id: number,
-    @Body('join', ParseIntPipe) @Optional() otherId: number,
-    @Body('groupName') @Optional() roomName: string) {
-    return this.usersService.createRoom(id, otherId, roomName);
-  }
-
   // @Get()
   // getAllUsers() {
   //   return this.usersService.getAllUsers();

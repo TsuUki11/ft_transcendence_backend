@@ -24,9 +24,6 @@ let UsersController = exports.UsersController = class UsersController {
     createUser(user_Info) {
         return this.usersService.createUser(user_Info);
     }
-    createRoom(id, otherId, roomName) {
-        return this.usersService.createRoom(id, otherId, roomName);
-    }
     getUser(id) {
         return this.usersService.getUser(id);
     }
@@ -41,17 +38,6 @@ __decorate([
     __metadata("design:paramtypes", [create_user_dto_1.createUserDto]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "createUser", null);
-__decorate([
-    (0, common_1.Post)("/createRoom/:id"),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
-    __param(1, (0, common_1.Body)('join', common_1.ParseIntPipe)),
-    __param(1, (0, common_1.Optional)()),
-    __param(2, (0, common_1.Body)('groupName')),
-    __param(2, (0, common_1.Optional)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number, String]),
-    __metadata("design:returntype", void 0)
-], UsersController.prototype, "createRoom", null);
 __decorate([
     (0, common_1.Get)("/:id"),
     __param(0, (0, common_1.Param)("id")),

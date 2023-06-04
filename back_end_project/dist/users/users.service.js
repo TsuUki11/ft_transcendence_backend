@@ -49,46 +49,6 @@ let UsersService = exports.UsersService = class UsersService {
         await this.prisma.inbox.deleteMany();
         await this.prisma.user.deleteMany();
     }
-    async createRoom(id, otherId, roomName) {
-        const newRoom = await this.prisma.room.create({
-            data: {
-                room_name: roomName,
-                whoJoined: {
-                    connect: { id: id }
-                },
-            }
-        });
-        this.addRoomToInbox(newRoom.id, id);
-        if (otherId)
-            this.addUserToTheRoom(newRoom.id, otherId);
-    }
-    async addRoomToInbox(roomId, userId) {
-        await this.prisma.inbox.update({
-            where: {
-                userId: userId
-            },
-            data: {
-                rooms: {
-                    connect: {
-                        id: roomId
-                    }
-                }
-            }
-        });
-    }
-    async addUserToTheRoom(roomId, userId) {
-        await this.prisma.room.update({
-            where: { id: roomId },
-            data: {
-                whoJoined: {
-                    connect: {
-                        id: userId,
-                    }
-                }
-            }
-        });
-        this.addRoomToInbox(roomId, userId);
-    }
 };
 exports.UsersService = UsersService = __decorate([
     (0, common_1.Injectable)(),
