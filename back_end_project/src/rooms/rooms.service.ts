@@ -20,6 +20,11 @@ export class RoomsService {
 			this.addUserToTheRoom(newRoom.id, otherId);
 	}
 
+	async joinRoom(roomId: number, userId: number) {
+		this.addUserToTheRoom(roomId, userId);
+		this.addRoomToInbox(roomId, userId);
+	}
+
 	async addRoomToInbox(roomId: number, userId: number) {
 		await this.prisma.inbox.update({
 			where: {

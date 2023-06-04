@@ -3,4 +3,5 @@ export declare class RoomsController {
     private roomsService;
     constructor(roomsService: RoomsService);
     createRoom(id: number, otherId: number, roomName: string): Promise<void>;
+    joinRoom(roomId: number, userId: number): Promise<void>;
 }

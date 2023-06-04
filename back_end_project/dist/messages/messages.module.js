@@ -6,23 +6,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.MessagesModule = void 0;
 const common_1 = require("@nestjs/common");
-const users_module_1 = require("./users/users.module");
-const rooms_module_1 = require("./rooms/rooms.module");
-const messages_module_1 = require("./messages/messages.module");
-console.log();
-let AppModule = exports.AppModule = class AppModule {
+const messages_controller_1 = require("./messages.controller");
+const messages_service_1 = require("./messages.service");
+const prisma_servise_1 = require("../prisma/prisma.servise");
+let MessagesModule = exports.MessagesModule = class MessagesModule {
 };
-exports.AppModule = AppModule = __decorate([
+exports.MessagesModule = MessagesModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            users_module_1.UsersModule,
-            messages_module_1.MessagesModule,
-            rooms_module_1.RoomsModule,
-        ],
-        controllers: [],
-        providers: []
+        controllers: [messages_controller_1.MessagesController],
+        providers: [prisma_servise_1.PrismaService, messages_service_1.MessagesService]
     })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+], MessagesModule);
+//# sourceMappingURL=messages.module.js.map

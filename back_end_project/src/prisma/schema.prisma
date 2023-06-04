@@ -18,6 +18,7 @@ model User {
   password   String
   inbox   Inbox?
   rooms     Room[]
+  messages  message[]
 }
 
 model Inbox {
@@ -37,9 +38,10 @@ model Room {
 
 model message {
   id Int @id @default(autoincrement())
-  createdBy Int
-  createdAt DateTime
+  createdBy User @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
   content String
   room Room @relation(fields: [roomId], references: [id])
   roomId Int
+  userId Int
 }

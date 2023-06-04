@@ -18,10 +18,14 @@ let UsersService = exports.UsersService = class UsersService {
     }
     async createUser(data) {
         const newUser = await this.prisma.user.create({ data });
-        await this.prisma.inbox.create({ data: {
-                inboxOf: { connect: { id: newUser.id } }
-            } });
-        const newUserInfo = await this.prisma.user.findUnique({ where: { id: newUser.id } });
+        await this.prisma.inbox.create({
+            data: {
+                inboxOf: { connect: { id: newUser.id } },
+            },
+        });
+        const newUserInfo = await this.prisma.user.findUnique({
+            where: { id: newUser.id },
+        });
         if (newUserInfo)
             return newUserInfo;
         return newUser;

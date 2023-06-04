@@ -1,4 +1,4 @@
-import { createUserDto } from "./dto/create-user-dto";
+import { createUserDto } from "../dto/user/create-user-dto";
 import { UsersService } from "./users.service";
 import { Prisma, User } from "@prisma/client";
 export declare class UsersController {

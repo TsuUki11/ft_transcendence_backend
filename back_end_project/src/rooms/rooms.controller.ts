@@ -8,8 +8,16 @@ export class RoomsController {
     @Post("/createRoom/:id")
     createRoom(
       @Param('id', ParseIntPipe) id: number,
-      @Body('join', ParseIntPipe) @Optional() otherId: number,
+      @Optional() @Body('join', ParseIntPipe) otherId: number,
       @Body('groupName') @Optional() roomName: string) {
       return this.roomsService.createRoom(id, otherId, roomName);
+    }
+
+    @Post("/joinRoom/:id")
+    joinRoom(
+      @Param('id', ParseIntPipe) roomId: number,
+      @Body('userId', ParseIntPipe) userId: number
+    ) {
+      return this.roomsService.joinRoom(roomId, userId);
     }
 }

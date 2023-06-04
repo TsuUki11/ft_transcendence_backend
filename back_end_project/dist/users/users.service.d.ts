@@ -1,6 +1,6 @@
-import { createUserDto } from './dto/create-user-dto';
-import { PrismaService } from '../prisma/prisma.servise';
-import { Prisma, User } from '@prisma/client';
+import { createUserDto } from "../dto/user/create-user-dto";
+import { PrismaService } from "../prisma/prisma.servise";
+import { Prisma, User } from "@prisma/client";
 export declare class UsersService {
     private prisma;
     constructor(prisma: PrismaService);

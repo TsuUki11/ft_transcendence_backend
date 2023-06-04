@@ -1,53 +1,59 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, getConnection, getRepository } from 'typeorm';
-import { createUserDto } from './dto/create-user-dto';
-import { PrismaService } from '../prisma/prisma.servise';
-import { Prisma, User } from '@prisma/client';
-import { connect } from 'http2';
-import { title } from 'process';
-import { combineLatest } from 'rxjs';
+import { BadRequestException, Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository, getConnection, getRepository } from "typeorm";
+import { createUserDto } from "../dto/user/create-user-dto";
+import { PrismaService } from "../prisma/prisma.servise";
+import { Prisma, User } from "@prisma/client";
+import { connect } from "http2";
+import { title } from "process";
+import { combineLatest } from "rxjs";
 
 @Injectable()
 export class UsersService {
-	constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
-	async createUser(data: createUserDto): Promise<User> {
-		const newUser = await this.prisma.user.create({ data });
-		await this.prisma.inbox.create({ data: {
-			inboxOf: {connect: { id: newUser.id } }
-		} })
-		const newUserInfo = await this.prisma.user.findUnique({where: {id: newUser.id} });
-		if (newUserInfo)
-			return newUserInfo;	
-		return newUser;
-	}
+  async createUser(data: createUserDto): Promise<User> {
+    const newUser = await this.prisma.user.create({ data });
+    await this.prisma.inbox.create({
+      data: {
+        inboxOf: { connect: { id: newUser.id } },
+      },
+    });
+    const newUserInfo = await this.prisma.user.findUnique({
+      where: { id: newUser.id },
+    });
+    if (newUserInfo) return newUserInfo;
+    return newUser;
+  }
 
-	async getAllUsers(): Promise<User[]>  {
-		const users = await this.prisma.user.findMany();
-		return users;
-	}
+  async getAllUsers(): Promise<User[]> {
+    const users = await this.prisma.user.findMany();
+    return users;
+  }
 
-	async getUser(where: Prisma.UserWhereUniqueInput): Promise<User>  {
-		const user = await this.prisma.user.findUniqueOrThrow({ where });
-		return user;
-	}
+  async getUser(where: Prisma.UserWhereUniqueInput): Promise<User> {
+    const user = await this.prisma.user.findUniqueOrThrow({ where });
+    return user;
+  }
 
-	async updateUser(id: Prisma.UserWhereUniqueInput, updateInfo: Prisma.UserUpdateInput): Promise<User>  {
-		const user = await this.prisma.user.update({
-			where: id,
-			data: updateInfo,
-		})
-		return user;
-	}
+  async updateUser(
+    id: Prisma.UserWhereUniqueInput,
+    updateInfo: Prisma.UserUpdateInput
+  ): Promise<User> {
+    const user = await this.prisma.user.update({
+      where: id,
+      data: updateInfo,
+    });
+    return user;
+  }
 
-	async deleteUser(where: Prisma.UserWhereUniqueInput) {
-		const user = await this.prisma.user.delete({ where })
-	}
+  async deleteUser(where: Prisma.UserWhereUniqueInput) {
+    const user = await this.prisma.user.delete({ where });
+  }
 
-	async deleteAll() {
-		await this.prisma.room.deleteMany();
-		await this.prisma.inbox.deleteMany();
-		await this.prisma.user.deleteMany();
-	}
+  async deleteAll() {
+    await this.prisma.room.deleteMany();
+    await this.prisma.inbox.deleteMany();
+    await this.prisma.user.deleteMany();
+  }
 }

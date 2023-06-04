@@ -22,18 +22,29 @@ let RoomsController = exports.RoomsController = class RoomsController {
     createRoom(id, otherId, roomName) {
         return this.roomsService.createRoom(id, otherId, roomName);
     }
+    joinRoom(roomId, userId) {
+        return this.roomsService.joinRoom(roomId, userId);
+    }
 };
 __decorate([
     (0, common_1.Post)("/createRoom/:id"),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
-    __param(1, (0, common_1.Body)('join', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Optional)()),
+    __param(1, (0, common_1.Body)('join', common_1.ParseIntPipe)),
     __param(2, (0, common_1.Body)('groupName')),
     __param(2, (0, common_1.Optional)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, Number, String]),
     __metadata("design:returntype", void 0)
 ], RoomsController.prototype, "createRoom", null);
+__decorate([
+    (0, common_1.Post)("/joinRoom/:id"),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Body)('userId', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", void 0)
+], RoomsController.prototype, "joinRoom", null);
 exports.RoomsController = RoomsController = __decorate([
     (0, common_1.Controller)('rooms'),
     __metadata("design:paramtypes", [rooms_service_1.RoomsService])
