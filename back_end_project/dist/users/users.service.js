@@ -17,12 +17,11 @@ let UsersService = class UsersService {
         this.prisma = prisma;
     }
     async createUser(data) {
-        console.log("CREATE CALLED");
         const newUser = await this.prisma.user.create({ data });
         return newUser;
     }
     async getAllUsers() {
-        const users = await this.prisma.user.findMany({ include: { task: true } });
+        const users = await this.prisma.user.findMany();
         return users;
     }
     async getUser(where) {
@@ -33,24 +32,6 @@ let UsersService = class UsersService {
         const user = await this.prisma.user.update({
             where: id,
             data: updateInfo,
-            include: { task: true }
-        });
-        return user;
-    }
-    async createTaskForUser(uId__, taskInfo) {
-        console.log(taskInfo);
-        await this.prisma.user.update({
-            where: { id: uId__ },
-            data: {
-                task: { create: {
-                        description: taskInfo.description,
-                        title: taskInfo.title,
-                    } }
-            }
-        });
-        const user = this.prisma.user.findUnique({
-            where: { id: uId__ },
-            include: { task: true }
         });
         return user;
     }

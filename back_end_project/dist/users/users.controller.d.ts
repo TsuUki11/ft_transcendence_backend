@@ -1,5 +1,5 @@
 import { UsersService } from './users.service';
-import { Prisma, Task, User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 export declare class UsersController {
     private usersService;
     constructor(usersService: UsersService);
@@ -7,8 +7,5 @@ export declare class UsersController {
     getAllUsers(): Promise<User[]>;
     getUser(id: Prisma.UserWhereUniqueInput): Promise<User>;
     updateUser(id: number, updateInfo: Prisma.UserUpdateInput): Promise<User>;
-    createTaskForUser(id: number, taskInfo: Prisma.TaskCreateInput): Promise<User & {
-        task: Task[];
-    }>;
     deleteUser(id: number): void;
 }

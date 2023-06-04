@@ -10,20 +10,34 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Task {
-  id          Int     @id() @unique() @default(autoincrement())
-  title       String
-  description String
-  done        Boolean @default(false)
-  user User	@relation(fields: [uId], references: [id])
-  uId	Int	@unique
-}
-
 model User {
   id         Int    @id() @default(autoincrement())
   first_name String
   last_name  String
   username   String
   password   String
-  task      Task[]
+  inbox   Inbox?
+}
+
+model Inbox {
+  id  Int @id() @default(autoincrement())
+  userId Int @unique
+  inboxOf User @relation(fields: [userId], references: [id])
+  rooms Room[]
+}
+
+model Room {
+  id        Int     @id() @default(autoincrement())
+  room_name String?
+  inbox    Inbox[]
+  messages  message[]
+}
+
+model message {
+  id Int @id @default(autoincrement())
+  createdBy Int
+  createdAt DateTime
+  content String
+  room Room @relation(fields: [roomId], references: [id])
+  roomId Int
 }
