@@ -12,12 +12,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_servise_1 = require("../prisma/prisma.servise");
-let UsersService = class UsersService {
+let UsersService = exports.UsersService = class UsersService {
     constructor(prisma) {
         this.prisma = prisma;
     }
     async createUser(data) {
         const newUser = await this.prisma.user.create({ data });
+        await this.prisma.inbox.create({ data: {
+                inboxOf: { connect: { id: newUser.id } }
+            } });
+        const newUserInfo = await this.prisma.user.findUnique({ where: { id: newUser.id } });
+        if (newUserInfo)
+            return newUserInfo;
         return newUser;
     }
     async getAllUsers() {
@@ -38,10 +44,54 @@ let UsersService = class UsersService {
     async deleteUser(where) {
         const user = await this.prisma.user.delete({ where });
     }
+    async deleteAll() {
+        await this.prisma.room.deleteMany();
+        await this.prisma.inbox.deleteMany();
+        await this.prisma.user.deleteMany();
+    }
+    async createRoom(id, otherId, roomName) {
+        const newRoom = await this.prisma.room.create({
+            data: {
+                room_name: roomName,
+                whoJoined: {
+                    connect: { id: id }
+                },
+            }
+        });
+        this.addRoomToInbox(newRoom.id, id);
+        if (otherId)
+            this.addUserToTheRoom(newRoom.id, otherId);
+    }
+    async addRoomToInbox(roomId, userId) {
+        await this.prisma.inbox.update({
+            where: {
+                userId: userId
+            },
+            data: {
+                rooms: {
+                    connect: {
+                        id: roomId
+                    }
+                }
+            }
+        });
+    }
+    async addUserToTheRoom(roomId, userId) {
+        await this.prisma.room.update({
+            where: { id: roomId },
+            data: {
+                whoJoined: {
+                    connect: {
+                        id: userId,
+                    }
+                }
+            }
+        });
+        this.addRoomToInbox(roomId, userId);
+    }
 };
-UsersService = __decorate([
+exports.UsersService = UsersService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_servise_1.PrismaService])
 ], UsersService);
-exports.UsersService = UsersService;
 //# sourceMappingURL=users.service.js.map

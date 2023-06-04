@@ -1,11 +1,11 @@
-import { UsersService } from './users.service';
-import { Prisma, User } from '@prisma/client';
+import { createUserDto } from "./dto/create-user-dto";
+import { UsersService } from "./users.service";
+import { Prisma, User } from "@prisma/client";
 export declare class UsersController {
     private usersService;
     constructor(usersService: UsersService);
-    createUser(user_Info: Prisma.UserCreateInput): void;
-    getAllUsers(): Promise<User[]>;
+    createUser(user_Info: createUserDto): Promise<User>;
+    createRoom(id: number, otherId: number, roomName: string): Promise<void>;
     getUser(id: Prisma.UserWhereUniqueInput): Promise<User>;
-    updateUser(id: number, updateInfo: Prisma.UserUpdateInput): Promise<User>;
-    deleteUser(id: number): void;
+    deleteAll(): void;
 }

@@ -14,66 +14,59 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
+const create_user_dto_1 = require("./dto/create-user-dto");
 const users_service_1 = require("./users.service");
 const client_1 = require("@prisma/client");
-let UsersController = class UsersController {
+let UsersController = exports.UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
     }
     createUser(user_Info) {
-        this.usersService.createUser(user_Info);
+        return this.usersService.createUser(user_Info);
     }
-    getAllUsers() {
-        return this.usersService.getAllUsers();
+    createRoom(id, otherId, roomName) {
+        return this.usersService.createRoom(id, otherId, roomName);
     }
     getUser(id) {
         return this.usersService.getUser(id);
     }
-    updateUser(id, updateInfo) {
-        return this.usersService.updateUser({ id }, updateInfo);
-    }
-    deleteUser(id) {
-        this.usersService.deleteUser({ id });
+    deleteAll() {
+        this.usersService.deleteAll();
     }
 };
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [create_user_dto_1.createUserDto]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "createUser", null);
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Post)("/createRoom/:id"),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Body)('join', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Optional)()),
+    __param(2, (0, common_1.Body)('groupName')),
+    __param(2, (0, common_1.Optional)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Number, Number, String]),
     __metadata("design:returntype", void 0)
-], UsersController.prototype, "getAllUsers", null);
+], UsersController.prototype, "createRoom", null);
 __decorate([
     (0, common_1.Get)("/:id"),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUser", null);
 __decorate([
-    (0, common_1.Patch)("/:id"),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
-    __param(1, (0, common_1.Body)()),
+    (0, common_1.Delete)("/all"),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], UsersController.prototype, "updateUser", null);
-__decorate([
-    (0, common_1.Delete)("/:id"),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
-], UsersController.prototype, "deleteUser", null);
-UsersController = __decorate([
-    (0, common_1.Controller)('users'),
+], UsersController.prototype, "deleteAll", null);
+exports.UsersController = UsersController = __decorate([
+    (0, common_1.Controller)("users"),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], UsersController);
-exports.UsersController = UsersController;
 //# sourceMappingURL=users.controller.js.map

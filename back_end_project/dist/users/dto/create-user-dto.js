@@ -13,6 +13,7 @@ exports.createUserDto = void 0;
 const class_validator_1 = require("class-validator");
 class createUserDto {
 }
+exports.createUserDto = createUserDto;
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
@@ -29,5 +30,4 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], createUserDto.prototype, "password", void 0);
-exports.createUserDto = createUserDto;
 //# sourceMappingURL=create-user-dto.js.map

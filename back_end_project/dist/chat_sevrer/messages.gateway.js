@@ -17,7 +17,7 @@ const websockets_1 = require("@nestjs/websockets");
 const messages_service_1 = require("./messages.service");
 const create_message_dto_1 = require("./dto/create-message.dto");
 const socket_io_1 = require("socket.io");
-let MessagesGateway = class MessagesGateway {
+let MessagesGateway = exports.MessagesGateway = class MessagesGateway {
     constructor(messagesService) {
         this.messagesService = messagesService;
     }
@@ -83,9 +83,8 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], MessagesGateway.prototype, "remove", null);
-MessagesGateway = __decorate([
+exports.MessagesGateway = MessagesGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({ cors: { origin: '*', }, }),
     __metadata("design:paramtypes", [messages_service_1.MessagesService])
 ], MessagesGateway);
-exports.MessagesGateway = MessagesGateway;
 //# sourceMappingURL=messages.gateway.js.map

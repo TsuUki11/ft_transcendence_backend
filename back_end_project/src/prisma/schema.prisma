@@ -17,6 +17,7 @@ model User {
   username   String
   password   String
   inbox   Inbox?
+  rooms     Room[]
 }
 
 model Inbox {
@@ -28,6 +29,7 @@ model Inbox {
 
 model Room {
   id        Int     @id() @default(autoincrement())
+  whoJoined User[]
   room_name String?
   inbox    Inbox[]
   messages  message[]

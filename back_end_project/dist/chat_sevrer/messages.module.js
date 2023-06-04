@@ -10,12 +10,11 @@ exports.MessagesModule = void 0;
 const common_1 = require("@nestjs/common");
 const messages_service_1 = require("./messages.service");
 const messages_gateway_1 = require("./messages.gateway");
-let MessagesModule = class MessagesModule {
+let MessagesModule = exports.MessagesModule = class MessagesModule {
 };
-MessagesModule = __decorate([
+exports.MessagesModule = MessagesModule = __decorate([
     (0, common_1.Module)({
         providers: [messages_gateway_1.MessagesGateway, messages_service_1.MessagesService]
     })
 ], MessagesModule);
-exports.MessagesModule = MessagesModule;
 //# sourceMappingURL=messages.module.js.map
