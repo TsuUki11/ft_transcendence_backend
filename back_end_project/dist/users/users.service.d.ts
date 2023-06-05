@@ -8,6 +8,19 @@ export declare class UsersService {
     getAllUsers(): Promise<User[]>;
     getUser(where: Prisma.UserWhereUniqueInput): Promise<User>;
     updateUser(id: Prisma.UserWhereUniqueInput, updateInfo: Prisma.UserUpdateInput): Promise<User>;
+    getUserInbox(userId: number): Promise<{
+        inbox: {
+            rooms: {
+                messages: {
+                    content: string;
+                }[];
+                room_name: string;
+                whoJoined: {
+                    username: string;
+                }[];
+            }[];
+        };
+    }>;
     deleteUser(where: Prisma.UserWhereUniqueInput): Promise<void>;
     deleteAll(): Promise<void>;
 }

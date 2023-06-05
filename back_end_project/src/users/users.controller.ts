@@ -21,16 +21,25 @@ export class UsersController {
   createUser(@Body() user_Info: createUserDto) {
     return this.usersService.createUser(user_Info);
   }
-
-  // @Get()
-  // getAllUsers() {
-  //   return this.usersService.getAllUsers();
-  // }
-
-  @Get("/:id")
+  
+  @Get("/getUser/:id")
   getUser(@Param("id") id: Prisma.UserWhereUniqueInput) {
     return this.usersService.getUser(id);
   }
+  
+  @Get("/getUserInbox")
+  getUserInbox(@Body("userId", ParseIntPipe) userId:number) {
+    return this.usersService.getUserInbox(userId);
+  }
+
+  @Delete("/all")
+  deleteAll() {
+    this.usersService.deleteAll();
+  }
+    // @Get()
+    // getAllUsers() {
+    //   return this.usersService.getAllUsers();
+    // }
 
   // @Patch("/:id")
   // updateUser(
@@ -40,10 +49,6 @@ export class UsersController {
   //   return this.usersService.updateUser({ id }, updateInfo);
   // }
 
-  @Delete("/all")
-  deleteAll() {
-    this.usersService.deleteAll();
-  }
 
   // @Delete("/:id")
   // deleteUser(@Param("id", ParseIntPipe) id: number) {

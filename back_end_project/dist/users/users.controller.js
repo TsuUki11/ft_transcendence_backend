@@ -27,6 +27,9 @@ let UsersController = exports.UsersController = class UsersController {
     getUser(id) {
         return this.usersService.getUser(id);
     }
+    getUserInbox(userId) {
+        return this.usersService.getUserInbox(userId);
+    }
     deleteAll() {
         this.usersService.deleteAll();
     }
@@ -39,12 +42,19 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "createUser", null);
 __decorate([
-    (0, common_1.Get)("/:id"),
+    (0, common_1.Get)("/getUser/:id"),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUser", null);
+__decorate([
+    (0, common_1.Get)("/getUserInbox"),
+    __param(0, (0, common_1.Body)("userId", common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "getUserInbox", null);
 __decorate([
     (0, common_1.Delete)("/all"),
     __metadata("design:type", Function),

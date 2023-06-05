@@ -45,10 +45,44 @@ let UsersService = exports.UsersService = class UsersService {
         });
         return user;
     }
+    async getUserInbox(userId) {
+        const inbox = await this.prisma.user.findUnique({
+            where: { id: userId },
+            select: {
+                inbox: {
+                    select: {
+                        rooms: {
+                            select: {
+                                room_name: true,
+                                whoJoined: {
+                                    skip: 1,
+                                    take: 1,
+                                    select: {
+                                        username: true,
+                                    }
+                                },
+                                messages: {
+                                    select: {
+                                        content: true,
+                                    },
+                                    orderBy: {
+                                        createdAt: "desc"
+                                    },
+                                    take: 1,
+                                }
+                            }
+                        }
+                    }
+                },
+            }
+        });
+        return inbox;
+    }
     async deleteUser(where) {
         const user = await this.prisma.user.delete({ where });
     }
     async deleteAll() {
+        await this.prisma.message.deleteMany();
         await this.prisma.room.deleteMany();
         await this.prisma.inbox.deleteMany();
         await this.prisma.user.deleteMany();

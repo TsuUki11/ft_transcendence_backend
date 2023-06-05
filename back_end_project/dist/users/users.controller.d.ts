@@ -6,5 +6,18 @@ export declare class UsersController {
     constructor(usersService: UsersService);
     createUser(user_Info: createUserDto): Promise<User>;
     getUser(id: Prisma.UserWhereUniqueInput): Promise<User>;
+    getUserInbox(userId: number): Promise<{
+        inbox: {
+            rooms: {
+                messages: {
+                    content: string;
+                }[];
+                room_name: string;
+                whoJoined: {
+                    username: string;
+                }[];
+            }[];
+        };
+    }>;
     deleteAll(): void;
 }
