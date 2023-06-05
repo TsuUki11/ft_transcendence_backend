@@ -26,6 +26,9 @@ let RoomsController = exports.RoomsController = class RoomsController {
     joinRoom(roomId, userId) {
         return this.roomsService.joinRoom(roomId, userId);
     }
+    getRoomMessages(roomId) {
+        return this.roomsService.getRoomMessages(roomId);
+    }
 };
 __decorate([
     (0, common_1.Post)("/createRoom"),
@@ -42,6 +45,13 @@ __decorate([
     __metadata("design:paramtypes", [Number, Number]),
     __metadata("design:returntype", void 0)
 ], RoomsController.prototype, "joinRoom", null);
+__decorate([
+    (0, common_1.Get)("/getRoomMessages"),
+    __param(0, (0, common_1.Body)("roomId", common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], RoomsController.prototype, "getRoomMessages", null);
 exports.RoomsController = RoomsController = __decorate([
     (0, common_1.Controller)('rooms'),
     __metadata("design:paramtypes", [rooms_service_1.RoomsService])

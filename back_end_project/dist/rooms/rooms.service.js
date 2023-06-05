@@ -27,6 +27,30 @@ let RoomsService = exports.RoomsService = class RoomsService {
     constructor(prisma) {
         this.prisma = prisma;
     }
+    async getRoomMessages(roomId) {
+        const messages = await this.prisma.message.findMany({
+            orderBy: {
+                createdAt: "desc"
+            },
+            take: 10,
+            where: {
+                roomId,
+            },
+            select: {
+                content: true,
+                createdAt: true,
+                createdBy: {
+                    select: {
+                        username: true,
+                    }
+                }
+            }
+        });
+        if (!messages) {
+            throw new common_1.NotFoundException("No messages found in this room");
+        }
+        return messages;
+    }
     async createRoom(roomInfo) {
         let { userId } = roomInfo, roomInfo__ = __rest(roomInfo, ["userId"]);
         userId = Number(userId);

@@ -5,4 +5,11 @@ export declare class RoomsController {
     constructor(roomsService: RoomsService);
     createRoom(roomInfo: createRoomDto): Promise<void>;
     joinRoom(roomId: number, userId: number): Promise<void>;
+    getRoomMessages(roomId: number): Promise<{
+        createdAt: Date;
+        content: string;
+        createdBy: {
+            username: string;
+        };
+    }[]>;
 }

@@ -18,7 +18,7 @@ model User {
   password   String
   inbox   Inbox?
   rooms     Room[]
-  messages  message[]
+  messages  Message[]
 }
 
 model Inbox {
@@ -33,10 +33,10 @@ model Room {
   whoJoined User[]
   room_name String?
   inbox    Inbox[]
-  messages  message[]
+  messages  Message[]
 }
 
-model message {
+model Message {
   id Int @id @default(autoincrement())
   createdBy User @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())

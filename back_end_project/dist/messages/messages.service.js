@@ -17,7 +17,6 @@ let MessagesService = exports.MessagesService = class MessagesService {
         this.prisma = prisma;
     }
     async createMessage(messageContent, userId, roomId) {
-        console.log("called");
         const newMessage = await this.prisma.message.create({
             data: {
                 content: messageContent,

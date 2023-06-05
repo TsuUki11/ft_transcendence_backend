@@ -8,7 +8,6 @@ export class MessagesService {
 
     // async createMessage(messageInfo: createMessageDto) {
     async createMessage(messageContent: string, userId: number, roomId: number) {
-        console.log("called");
         const newMessage = await this.prisma.message.create({
             data: {
                 content: messageContent,
