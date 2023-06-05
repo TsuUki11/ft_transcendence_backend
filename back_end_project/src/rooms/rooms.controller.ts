@@ -1,16 +1,14 @@
 import { Body, Controller, Optional, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
+import { createRoomDto } from '../dto/room/createRoomDto';
 
 @Controller('rooms')
 export class RoomsController {
     constructor (private roomsService: RoomsService) {}
 
-    @Post("/createRoom/:id")
-    createRoom(
-      @Param('id', ParseIntPipe) id: number,
-      @Optional() @Body('join', ParseIntPipe) otherId: number,
-      @Body('groupName') @Optional() roomName: string) {
-      return this.roomsService.createRoom(id, otherId, roomName);
+    @Post("/createRoom")
+    createRoom(@Body() roomInfo: createRoomDto) {
+      return this.roomsService.createRoom(roomInfo);
     }
 
     @Post("/joinRoom/:id")

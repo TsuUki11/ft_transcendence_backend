@@ -15,26 +15,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RoomsController = void 0;
 const common_1 = require("@nestjs/common");
 const rooms_service_1 = require("./rooms.service");
+const createRoomDto_1 = require("../dto/room/createRoomDto");
 let RoomsController = exports.RoomsController = class RoomsController {
     constructor(roomsService) {
         this.roomsService = roomsService;
     }
-    createRoom(id, otherId, roomName) {
-        return this.roomsService.createRoom(id, otherId, roomName);
+    createRoom(roomInfo) {
+        return this.roomsService.createRoom(roomInfo);
     }
     joinRoom(roomId, userId) {
         return this.roomsService.joinRoom(roomId, userId);
     }
 };
 __decorate([
-    (0, common_1.Post)("/createRoom/:id"),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
-    __param(1, (0, common_1.Optional)()),
-    __param(1, (0, common_1.Body)('join', common_1.ParseIntPipe)),
-    __param(2, (0, common_1.Body)('groupName')),
-    __param(2, (0, common_1.Optional)()),
+    (0, common_1.Post)("/createRoom"),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number, String]),
+    __metadata("design:paramtypes", [createRoomDto_1.createRoomDto]),
     __metadata("design:returntype", void 0)
 ], RoomsController.prototype, "createRoom", null);
 __decorate([

@@ -1,7 +1,8 @@
 import { RoomsService } from './rooms.service';
+import { createRoomDto } from '../dto/room/createRoomDto';
 export declare class RoomsController {
     private roomsService;
     constructor(roomsService: RoomsService);
-    createRoom(id: number, otherId: number, roomName: string): Promise<void>;
+    createRoom(roomInfo: createRoomDto): Promise<void>;
     joinRoom(roomId: number, userId: number): Promise<void>;
 }
