@@ -1,15 +1,10 @@
 import { IsNotEmpty, IsNumber, IsOptional } from "class-validator"
 
-export class createRoomDto {
+export class createGroupDto {
     @IsNumber()
     @IsNotEmpty()
     userId: number
     
-    @IsOptional()
-    @IsNumber()
-    joinWithId: number
-    
-    @IsOptional()
     @IsNotEmpty()
     groupName: string
 }

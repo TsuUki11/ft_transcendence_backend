@@ -8,17 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RoomsService = void 0;
 const common_1 = require("@nestjs/common");
@@ -30,7 +19,7 @@ let RoomsService = exports.RoomsService = class RoomsService {
     async getRoomMessages(roomId) {
         const messages = await this.prisma.message.findMany({
             orderBy: {
-                createdAt: "desc"
+                createdAt: "desc",
             },
             take: 10,
             where: {
@@ -42,49 +31,67 @@ let RoomsService = exports.RoomsService = class RoomsService {
                 createdBy: {
                     select: {
                         username: true,
-                    }
-                }
-            }
+                    },
+                },
+            },
         });
         if (!messages) {
             throw new common_1.NotFoundException("No messages found in this room");
         }
         return messages;
     }
-    async createRoom(roomInfo) {
-        let { userId } = roomInfo, roomInfo__ = __rest(roomInfo, ["userId"]);
+    async createConversation(roomInfo) {
+        let { userId, joinWithId } = roomInfo;
+        userId = Number(userId);
+        joinWithId = Number(joinWithId);
+        const newRoom = await this.prisma.room.create({
+            data: {
+                whoJoined: {
+                    connect: { id: userId },
+                },
+            },
+        });
+        this.addRoomToInbox(newRoom.id, userId);
+        this.addUserToTheRoom(newRoom.id, joinWithId);
+    }
+    async createGroup(roomInfo) {
+        let { userId, groupName } = roomInfo;
         userId = Number(userId);
         const newRoom = await this.prisma.room.create({
             data: {
-                room_name: roomInfo__.groupName,
+                group: true,
+                room_name: groupName,
                 whoJoined: {
-                    connect: { id: userId }
+                    connect: { id: userId },
                 },
-            }
+            },
         });
         this.addRoomToInbox(newRoom.id, userId);
-        if (roomInfo__.joinWithId) {
-            let otherId = roomInfo__.joinWithId;
-            otherId = Number(otherId);
-            this.addUserToTheRoom(newRoom.id, otherId);
-        }
     }
     async joinRoom(roomId, userId) {
+        const room = await this.prisma.room.findUnique({
+            where: {
+                id: roomId,
+            }
+        });
+        if (!room || !room.group) {
+            throw new common_1.NotFoundException("No group founded!");
+        }
         this.addUserToTheRoom(roomId, userId);
         this.addRoomToInbox(roomId, userId);
     }
     async addRoomToInbox(roomId, userId) {
         await this.prisma.inbox.update({
             where: {
-                userId: userId
+                userId: userId,
             },
             data: {
                 rooms: {
                     connect: {
-                        id: roomId
-                    }
-                }
-            }
+                        id: roomId,
+                    },
+                },
+            },
         });
     }
     async addUserToTheRoom(roomId, userId) {
@@ -94,9 +101,9 @@ let RoomsService = exports.RoomsService = class RoomsService {
                 whoJoined: {
                     connect: {
                         id: userId,
-                    }
-                }
-            }
+                    },
+                },
+            },
         });
         this.addRoomToInbox(roomId, userId);
     }

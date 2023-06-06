@@ -15,13 +15,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RoomsController = void 0;
 const common_1 = require("@nestjs/common");
 const rooms_service_1 = require("./rooms.service");
-const createRoomDto_1 = require("../dto/room/createRoomDto");
+const createConversationDto_1 = require("../dto/room/createConversationDto");
+const createGroupDto_1 = require("../dto/room/createGroupDto");
 let RoomsController = exports.RoomsController = class RoomsController {
     constructor(roomsService) {
         this.roomsService = roomsService;
     }
-    createRoom(roomInfo) {
-        return this.roomsService.createRoom(roomInfo);
+    createConversation(roomInfo) {
+        return this.roomsService.createConversation(roomInfo);
+    }
+    createGroup(roomInfo) {
+        return this.roomsService.createGroup(roomInfo);
     }
     joinRoom(roomId, userId) {
         return this.roomsService.joinRoom(roomId, userId);
@@ -31,16 +35,23 @@ let RoomsController = exports.RoomsController = class RoomsController {
     }
 };
 __decorate([
-    (0, common_1.Post)("/createRoom"),
+    (0, common_1.Post)("/createConversation"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [createRoomDto_1.createRoomDto]),
+    __metadata("design:paramtypes", [createConversationDto_1.createConversationDto]),
     __metadata("design:returntype", void 0)
-], RoomsController.prototype, "createRoom", null);
+], RoomsController.prototype, "createConversation", null);
+__decorate([
+    (0, common_1.Post)("/createGroup"),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [createGroupDto_1.createGroupDto]),
+    __metadata("design:returntype", void 0)
+], RoomsController.prototype, "createGroup", null);
 __decorate([
     (0, common_1.Post)("/joinRoom/:id"),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
-    __param(1, (0, common_1.Body)('userId', common_1.ParseIntPipe)),
+    __param(0, (0, common_1.Param)("id", common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Body)("userId", common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, Number]),
     __metadata("design:returntype", void 0)
@@ -53,7 +64,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], RoomsController.prototype, "getRoomMessages", null);
 exports.RoomsController = RoomsController = __decorate([
-    (0, common_1.Controller)('rooms'),
+    (0, common_1.Controller)("rooms"),
     __metadata("design:paramtypes", [rooms_service_1.RoomsService])
 ], RoomsController);
 //# sourceMappingURL=rooms.controller.js.map

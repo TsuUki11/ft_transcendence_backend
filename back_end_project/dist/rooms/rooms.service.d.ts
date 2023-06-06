@@ -1,5 +1,6 @@
-import { PrismaService } from '../prisma/prisma.servise';
-import { createRoomDto } from '../dto/room/createRoomDto';
+import { PrismaService } from "../prisma/prisma.servise";
+import { createConversationDto } from "../dto/room/createConversationDto";
+import { createGroupDto } from "../dto/room/createGroupDto";
 export declare class RoomsService {
     private prisma;
     constructor(prisma: PrismaService);
@@ -10,7 +11,8 @@ export declare class RoomsService {
             username: string;
         };
     }[]>;
-    createRoom(roomInfo: createRoomDto): Promise<void>;
+    createConversation(roomInfo: createConversationDto): Promise<void>;
+    createGroup(roomInfo: createGroupDto): Promise<void>;
     joinRoom(roomId: number, userId: number): Promise<void>;
     addRoomToInbox(roomId: number, userId: number): Promise<void>;
     addUserToTheRoom(roomId: number, userId: number): Promise<void>;

@@ -7,6 +7,8 @@ import { Prisma, User } from "@prisma/client";
 import { connect } from "http2";
 import { title } from "process";
 import { combineLatest } from "rxjs";
+import { readFile } from 'fs/promises';
+const DEFAULT_PROFILE_PICTURE_DEFAULT_PATH ="/Users/aaitoual/Desktop/chat/back_end_project/src/picture/defaultProfilePicture.jpeg"
 
 @Injectable()
 export class UsersService {

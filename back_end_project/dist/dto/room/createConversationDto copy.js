@@ -9,29 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUserDto = void 0;
+exports.createConversationDto = void 0;
 const class_validator_1 = require("class-validator");
-class createUserDto {
+class createConversationDto {
 }
-exports.createUserDto = createUserDto;
+exports.createConversationDto = createConversationDto;
 __decorate([
+    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], createUserDto.prototype, "first_name", void 0);
+    __metadata("design:type", Number)
+], createConversationDto.prototype, "userId", void 0);
 __decorate([
+    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], createUserDto.prototype, "last_name", void 0);
-__decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], createUserDto.prototype, "username", void 0);
-__decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], createUserDto.prototype, "password", void 0);
-__decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], createUserDto.prototype, "profilePicture", void 0);
-//# sourceMappingURL=create-user-dto.js.map
+    __metadata("design:type", Number)
+], createConversationDto.prototype, "joinWithId", void 0);
+//# sourceMappingURL=createConversationDto%20copy.js.map

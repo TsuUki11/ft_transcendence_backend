@@ -1,28 +1,40 @@
-import { Body, Controller, Get, Optional, Param, ParseIntPipe, Post } from '@nestjs/common';
-import { RoomsService } from './rooms.service';
-import { createRoomDto } from '../dto/room/createRoomDto';
-import { promises } from 'dns';
-import { Message } from '@prisma/client';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from "@nestjs/common";
+import { RoomsService } from "./rooms.service";
+import { createConversationDto } from "../dto/room/createConversationDto";
+import { CreateHistogramOptions } from "perf_hooks";
+import { createGroupDto } from "../dto/room/createGroupDto";
 
-@Controller('rooms')
+@Controller("rooms")
 export class RoomsController {
-    constructor (private roomsService: RoomsService) {}
+  constructor(private roomsService: RoomsService) {}
 
-    @Post("/createRoom")
-    createRoom(@Body() roomInfo: createRoomDto) {
-      return this.roomsService.createRoom(roomInfo);
-    }
+  @Post("/createConversation")
+  createConversation(@Body() roomInfo: createConversationDto) {
+    return this.roomsService.createConversation(roomInfo);
+  }
 
-    @Post("/joinRoom/:id")
-    joinRoom(
-      @Param('id', ParseIntPipe) roomId: number,
-      @Body('userId', ParseIntPipe) userId: number
-    ) {
-      return this.roomsService.joinRoom(roomId, userId);
-    }
+  @Post("/createGroup")
+  createGroup(@Body() roomInfo: createGroupDto) {
+    return this.roomsService.createGroup(roomInfo);
+  }
 
-    @Get("/getRoomMessages")
-    getRoomMessages(@Body("roomId", ParseIntPipe) roomId: number) {
-      return this.roomsService.getRoomMessages(roomId);
-    }
+  @Post("/joinRoom/:id")
+  joinRoom(
+    @Param("id", ParseIntPipe) roomId: number,
+    @Body("userId", ParseIntPipe) userId: number
+  ) {
+    return this.roomsService.joinRoom(roomId, userId);
+  }
+
+  @Get("/getRoomMessages")
+  getRoomMessages(@Body("roomId", ParseIntPipe) roomId: number) {
+    return this.roomsService.getRoomMessages(roomId);
+  }
 }

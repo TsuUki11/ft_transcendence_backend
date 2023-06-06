@@ -9,24 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createRoomDto = void 0;
+exports.createConversationDto = void 0;
 const class_validator_1 = require("class-validator");
-class createRoomDto {
+class createConversationDto {
 }
-exports.createRoomDto = createRoomDto;
+exports.createConversationDto = createConversationDto;
 __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
-], createRoomDto.prototype, "userId", void 0);
+], createConversationDto.prototype, "userId", void 0);
 __decorate([
-    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], createRoomDto.prototype, "joinWithId", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], createRoomDto.prototype, "groupName", void 0);
-//# sourceMappingURL=createRoomDto.js.map
+    __metadata("design:type", Number)
+], createConversationDto.prototype, "joinWithId", void 0);
+//# sourceMappingURL=createConversationDto.js.map

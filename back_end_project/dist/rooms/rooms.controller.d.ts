@@ -1,9 +1,11 @@
-import { RoomsService } from './rooms.service';
-import { createRoomDto } from '../dto/room/createRoomDto';
+import { RoomsService } from "./rooms.service";
+import { createConversationDto } from "../dto/room/createConversationDto";
+import { createGroupDto } from "../dto/room/createGroupDto";
 export declare class RoomsController {
     private roomsService;
     constructor(roomsService: RoomsService);
-    createRoom(roomInfo: createRoomDto): Promise<void>;
+    createConversation(roomInfo: createConversationDto): Promise<void>;
+    createGroup(roomInfo: createGroupDto): Promise<void>;
     joinRoom(roomId: number, userId: number): Promise<void>;
     getRoomMessages(roomId: number): Promise<{
         createdAt: Date;

@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_servise_1 = require("../prisma/prisma.servise");
+const DEFAULT_PROFILE_PICTURE_DEFAULT_PATH = "/Users/aaitoual/Desktop/chat/back_end_project/src/picture/defaultProfilePicture.jpeg";
 let UsersService = exports.UsersService = class UsersService {
     constructor(prisma) {
         this.prisma = prisma;
