@@ -12,7 +12,7 @@ export class RoomsService {
   async getRoomMessages(roomId: number) {
     const messages = await this.prisma.message.findMany({
       orderBy: {
-        createdAt: "desc",
+        createdAt: "asc",
       },
       take: 10,
       where: {

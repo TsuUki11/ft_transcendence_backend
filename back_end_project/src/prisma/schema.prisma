@@ -8,39 +8,40 @@ generator client {
 }
 
 model User {
-  id         Int    @id() @default(autoincrement())
-  first_name String
-  last_name  String
-  username   String
-  password   String
+  id             Int       @id() @default(autoincrement())
+  first_name     String
+  last_name      String
+  username       String
+  password       String
   profilePicture String
-  inbox   Inbox?
-  rooms     Room[]
-  messages  Message[]
+  inbox          Inbox?
+  rooms          Room[]
+  messages       Message[]
 }
 
 model Inbox {
-  id  Int @id() @default(autoincrement())
-  userId Int @unique
-  inboxOf User @relation(fields: [userId], references: [id])
-  rooms Room[]
+  id      Int    @id() @default(autoincrement())
+  userId  Int    @unique
+  inboxOf User   @relation(fields: [userId], references: [id])
+  rooms   Room[]
 }
 
 model Room {
-  id        Int     @id() @default(autoincrement())
-  group     Boolean @default(false)
-  whoJoined User[]
-  room_name String?
-  inbox    Inbox[]
-  messages  Message[]
+  id          Int       @id() @default(autoincrement())
+  group       Boolean   @default(false)
+  whoJoined   User[]
+  room_name   String?
+  inbox       Inbox[]
+  messages    Message[]
+  roomPicture String?
 }
 
 model Message {
-  id Int @id @default(autoincrement())
-  createdBy User @relation(fields: [userId], references: [id])
+  id        Int      @id @default(autoincrement())
+  createdBy User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
-  content String
-  room Room @relation(fields: [roomId], references: [id])
-  roomId Int
-  userId Int
+  content   String
+  room      Room     @relation(fields: [roomId], references: [id])
+  roomId    Int
+  userId    Int
 }

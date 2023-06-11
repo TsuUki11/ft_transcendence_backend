@@ -27,9 +27,9 @@ export class UsersController {
     return this.usersService.getUser(id);
   }
   
-  @Get("/getUserInbox")
-  getUserInbox(@Body("userId", ParseIntPipe) userId:number) {
-    return this.usersService.getUserInbox(userId);
+  @Get("/getUserConversationInbox/:id")
+  getUserInbox(@Param("id", ParseIntPipe) userId:number) {
+    return this.usersService.getUserConversationInbox(userId);
   }
 
   @Delete("/all")

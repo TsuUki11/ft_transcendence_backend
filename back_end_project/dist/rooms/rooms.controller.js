@@ -49,7 +49,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], RoomsController.prototype, "createGroup", null);
 __decorate([
-    (0, common_1.Post)("/joinRoom/:id"),
+    (0, common_1.Put)("/joinRoom/:id"),
     __param(0, (0, common_1.Param)("id", common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)("userId", common_1.ParseIntPipe)),
     __metadata("design:type", Function),
@@ -57,8 +57,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], RoomsController.prototype, "joinRoom", null);
 __decorate([
-    (0, common_1.Get)("/getRoomMessages"),
-    __param(0, (0, common_1.Body)("roomId", common_1.ParseIntPipe)),
+    (0, common_1.Get)("/getRoomMessages/:id"),
+    __param(0, (0, common_1.Param)("id", common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)

@@ -7,4 +7,8 @@ export class createGroupDto {
     
     @IsNotEmpty()
     groupName: string
+
+    @IsOptional()
+    @IsNotEmpty()
+    roomPicture: string
 }

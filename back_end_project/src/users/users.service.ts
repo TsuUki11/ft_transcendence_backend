@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository, getConnection, getRepository } from "typeorm";
 import { createUserDto } from "../dto/user/create-user-dto";
@@ -6,7 +6,7 @@ import { PrismaService } from "../prisma/prisma.servise";
 import { Prisma, User } from "@prisma/client";
 import { connect } from "http2";
 import { title } from "process";
-import { combineLatest } from "rxjs";
+import { NotFoundError, combineLatest } from "rxjs";
 import { readFile } from 'fs/promises';
 const DEFAULT_PROFILE_PICTURE_DEFAULT_PATH ="/Users/aaitoual/Desktop/chat/back_end_project/src/picture/defaultProfilePicture.jpeg"
 
@@ -49,37 +49,60 @@ export class UsersService {
     return user;
   }
 
-  async getUserInbox(userId: number) {
-    const inbox = await this.prisma.user.findUnique({
+  async getUserConversationInbox(userId: number) {
+    let inbox = await this.prisma.user.findUnique({
       where: {id: userId},
       select: {
-        inbox: {
+        rooms: {
           select: {
-            rooms: {
+            whoJoined: {
               select: {
-                room_name: true,
-                whoJoined: {
-                  skip: 1,
-                  take: 1,
+                username: true,
+                profilePicture: true,
+                id: true,
+              }
+            },
+            messages: {
+              select: {
+                createdAt: true,
+                createdBy: {
                   select: {
                     username: true,
+                    id: true,
                   }
                 },
-                messages: {
-                  select: {
-                    content: true,
-                  },
-                  orderBy: {
-                    createdAt: "desc"
-                  },
-                  take: 1,
-                }
+                content: true,
+              },
+              orderBy: {
+                createdAt: "desc"
+              },
+              take: 1,
+            }
+          }
+        }
+      }
+    })
+    const check_inbox = await this.prisma.user.findUnique({
+      where: {id: userId},
+      select: {
+        rooms: {
+          select: {
+            group: true,
+            whoJoined: {
+              select: {
+                profilePicture: true,
               }
             }
           }
-        },
+        }
       }
     })
+
+    if (!check_inbox)
+      throw new NotFoundException("No inbox found for this user");
+
+    for (let i = 0; i < check_inbox.rooms.length; i++) {
+    }
     return inbox;
   }
 

@@ -10,7 +10,6 @@ export class MessagesGateway {
 	server: Server
   constructor(private readonly messagesService: MessagesService) {}
 
-
   @SubscribeMessage('createMessage')
   async create(@MessageBody() createMessageDto: CreateMessageDto, @ConnectedSocket() client: Socket) {
     console.log(createMessageDto);
@@ -23,16 +22,6 @@ export class MessagesGateway {
   findAll(@MessageBody() body) {
     return this.messagesService.findAll();
   }
-
-  // @SubscribeMessage('findOneMessage')
-  // findOne(@MessageBody() id: number) {
-  //   return this.messagesService.findOne(id);
-  // }
-
-  // @SubscribeMessage('updateMessage')
-  // update(@MessageBody() updateMessageDto: UpdateMessageDto) {
-  //   return this.messagesService.update(updateMessageDto.id, updateMessageDto);
-  // }
 
   @SubscribeMessage('joinRoom')
   joinRoom(@MessageBody('name') name: string, @ConnectedSocket() client: Socket) {

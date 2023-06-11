@@ -23,4 +23,9 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], createGroupDto.prototype, "groupName", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], createGroupDto.prototype, "roomPicture", void 0);
 //# sourceMappingURL=createGroupDto.js.map

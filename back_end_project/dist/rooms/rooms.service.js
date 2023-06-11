@@ -19,7 +19,7 @@ let RoomsService = exports.RoomsService = class RoomsService {
     async getRoomMessages(roomId) {
         const messages = await this.prisma.message.findMany({
             orderBy: {
-                createdAt: "desc",
+                createdAt: "asc",
             },
             take: 10,
             where: {

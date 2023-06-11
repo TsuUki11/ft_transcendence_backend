@@ -15,8 +15,12 @@ const prisma_servise_1 = require("../prisma/prisma.servise");
 let MessagesService = exports.MessagesService = class MessagesService {
     constructor(prisma) {
         this.prisma = prisma;
+        this.idToUser = {};
     }
-    async createMessage(messageContent, userId, roomId) {
+    async createMessage(messageInfo) {
+        let { messageContent, userId, roomId } = messageInfo;
+        roomId = Number(roomId);
+        userId = Number(userId);
         const newMessage = await this.prisma.message.create({
             data: {
                 content: messageContent,
@@ -32,6 +36,23 @@ let MessagesService = exports.MessagesService = class MessagesService {
                 }
             },
         });
+    }
+    async getMessagesInTheRoom(roomId, take) {
+        const messages = this.prisma.message.findFirst({
+            where: {
+                roomId,
+            },
+            select: {
+                content: true,
+                createdAt: true,
+                createdBy: {
+                    select: {
+                        username: true,
+                    }
+                }
+            }
+        });
+        return messages;
     }
 };
 exports.MessagesService = MessagesService = __decorate([

@@ -15,23 +15,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessagesController = void 0;
 const common_1 = require("@nestjs/common");
 const messages_service_1 = require("./messages.service");
+const createMessageDto_1 = require("../dto/message/createMessageDto");
 let MessagesController = exports.MessagesController = class MessagesController {
     constructor(messagesService) {
         this.messagesService = messagesService;
     }
-    createMessage(messageContent, userId, roomId) {
-        return this.messagesService.createMessage(messageContent, userId, roomId);
+    createMessage(messageInfo) {
+        return this.messagesService.createMessage(messageInfo);
+    }
+    getMessagesInTheRoom(roomId, take) {
+        return this.messagesService.getMessagesInTheRoom(roomId, take);
     }
 };
 __decorate([
     (0, common_1.Post)('/createMessage'),
-    __param(0, (0, common_1.Body)('messageContent')),
-    __param(1, (0, common_1.Body)('userId', common_1.ParseIntPipe)),
-    __param(2, (0, common_1.Body)('roomId', common_1.ParseIntPipe)),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Number, Number]),
+    __metadata("design:paramtypes", [createMessageDto_1.createMessageDto]),
     __metadata("design:returntype", void 0)
 ], MessagesController.prototype, "createMessage", null);
+__decorate([
+    (0, common_1.Post)('/getMessagesInTheRoom/:roomId'),
+    __param(0, (0, common_1.Param)('roomId', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Body)('take')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", void 0)
+], MessagesController.prototype, "getMessagesInTheRoom", null);
 exports.MessagesController = MessagesController = __decorate([
     (0, common_1.Controller)('messages'),
     __metadata("design:paramtypes", [messages_service_1.MessagesService])

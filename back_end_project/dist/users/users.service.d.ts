@@ -8,18 +8,22 @@ export declare class UsersService {
     getAllUsers(): Promise<User[]>;
     getUser(where: Prisma.UserWhereUniqueInput): Promise<User>;
     updateUser(id: Prisma.UserWhereUniqueInput, updateInfo: Prisma.UserUpdateInput): Promise<User>;
-    getUserInbox(userId: number): Promise<{
-        inbox: {
-            rooms: {
-                messages: {
-                    content: string;
-                }[];
-                room_name: string;
-                whoJoined: {
+    getUserConversationInbox(userId: number): Promise<{
+        rooms: {
+            messages: {
+                createdAt: Date;
+                content: string;
+                createdBy: {
                     username: string;
-                }[];
+                    id: number;
+                };
             }[];
-        };
+            whoJoined: {
+                username: string;
+                profilePicture: string;
+                id: number;
+            }[];
+        }[];
     }>;
     deleteUser(where: Prisma.UserWhereUniqueInput): Promise<void>;
     deleteAll(): Promise<void>;
