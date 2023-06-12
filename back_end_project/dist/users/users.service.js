@@ -52,7 +52,13 @@ let UsersService = exports.UsersService = class UsersService {
             select: {
                 rooms: {
                     select: {
+                        id: true,
                         whoJoined: {
+                            where: {
+                                id: {
+                                    not: userId,
+                                }
+                            },
                             select: {
                                 username: true,
                                 profilePicture: true,

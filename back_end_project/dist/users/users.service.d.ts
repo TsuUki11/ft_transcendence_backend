@@ -18,6 +18,7 @@ export declare class UsersService {
                     id: number;
                 };
             }[];
+            id: number;
             whoJoined: {
                 username: string;
                 profilePicture: string;

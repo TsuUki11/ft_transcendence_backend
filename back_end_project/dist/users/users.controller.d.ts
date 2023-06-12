@@ -16,6 +16,7 @@ export declare class UsersController {
                     id: number;
                 };
             }[];
+            id: number;
             whoJoined: {
                 username: string;
                 profilePicture: string;
